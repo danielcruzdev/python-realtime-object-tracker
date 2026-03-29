@@ -1,0 +1,19 @@
+# Modelos YOLO (arquivos grandes, baixados automaticamente)
+models/*.pt
+
+# Screenshots geradas em tempo de execução
+screenshots/*
+!screenshots/.gitkeep
+
+# Ambiente virtual
+.venv/
+venv/
+env/
+
+# Cache Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Ultralytics cache
+runs/
