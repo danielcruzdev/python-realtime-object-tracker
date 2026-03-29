@@ -1,5 +1,8 @@
 # 🎯 python-realtime-object-tracker
 
+[![Build](https://github.com/danielcruzdev/python-realtime-object-tracker/actions/workflows/build.yml/badge.svg)](https://github.com/danielcruzdev/python-realtime-object-tracker/actions/workflows/build.yml)
+[![Python](https://img.shields.io/badge/Python-3.10%20%7C%203.11-blue?logo=python&logoColor=white)](https://www.python.org/downloads/)
+
 Real-time multi-object detection and tracking via webcam, combining **YOLOv8** (detection) with the **SORT** algorithm (tracking) and Kalman Filter.
 
 ---
@@ -53,7 +56,7 @@ python --version
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/python-realtime-object-tracker.git
+git clone https://github.com/danielcruzdev/python-realtime-object-tracker.git
 cd python-realtime-object-tracker
 ```
 
