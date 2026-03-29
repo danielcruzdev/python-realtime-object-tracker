@@ -2,7 +2,7 @@
 YOLO + SORT Webcam Tracker
 --------------------------
 Detecta e rastreia objetos em tempo real usando:
-  - YOLOv8 (Ultralytics) para detecção de objetos
+  - YOLO26 (Ultralytics) para detecção de objetos
   - SORT para rastreamento multi-objeto
 
 Controles:
@@ -12,9 +12,9 @@ Controles:
   +/-      → Aumentar/diminuir confiança mínima do YOLO
 
 Uso:
-  python main.py                        # padrão: yolov8n, câmera 0
-  python main.py --model yolov8s.pt
-  python main.py --model yolov8m.pt --camera 1
+  python main.py                        # padrão: yolo26n, câmera 0
+  python main.py --model yolo26s.pt
+  python main.py --model yolo26m.pt --camera 1
 """
 
 import argparse
@@ -27,14 +27,14 @@ from tracker.sort import Sort
 
 MODELS_DIR  = Path("models")
 SCREEN_DIR  = Path("screenshots")
-MODEL_NAMES = ["yolov8n.pt", "yolov8s.pt", "yolov8m.pt", "yolov8l.pt", "yolov8x.pt"]
+MODEL_NAMES = ["yolo26n.pt", "yolo26s.pt", "yolo26m.pt", "yolo26l.pt", "yolo26x.pt"]
 
 
 # ──────────────────────────────────────────────
 # Configurações
 # ──────────────────────────────────────────────
 CAMERA_INDEX   = 0              # Índice da webcam (0 = padrão)
-YOLO_MODEL     = "yolov8n.pt"   # Modelo YOLO: yolov8n/s/m/l/x
+YOLO_MODEL     = "yolo26n.pt"   # Modelo YOLO: yolo26n/s/m/l/x
 CONF_THRESHOLD = 0.4      # Confiança mínima inicial para detecção
 IOU_THRESHOLD  = 0.45     # IoU para NMS do YOLO
 MAX_AGE        = 5        # SORT: frames máximos sem atualização
@@ -86,10 +86,11 @@ def draw_label(img, text: str, pos: tuple[int, int], color: tuple[int, int, int]
 
 
 def overlay_info(frame, conf_threshold: float, n_tracks: int, fps: float,
-                 class_counts: dict):
+                 class_counts: dict, model_name: str = ""):
     """HUD com informações gerais no canto superior esquerdo."""
     counts_str = "  ".join(f"{cls}:{cnt}" for cls, cnt in sorted(class_counts.items()))
     lines = [
+        f"Modelo:    {model_name}",
         f"FPS:       {fps:.1f}",
         f"Tracks:    {n_tracks}",
         f"Confianca: {conf_threshold:.2f}  (+/- para ajustar)",
@@ -110,7 +111,7 @@ def parse_args():
         "--model", "-m",
         default=YOLO_MODEL,
         choices=MODEL_NAMES,
-        help=f"Modelo YOLOv8 a usar. Opções: {', '.join(MODEL_NAMES)} (padrão: {YOLO_MODEL})",
+        help=f"Modelo YOLO26 a usar. Opções: {', '.join(MODEL_NAMES)} (padrão: {YOLO_MODEL})",
     )
     parser.add_argument(
         "--camera", "-c",
@@ -292,7 +293,7 @@ def main():
             t_start     = cv2.getTickCount()
 
         # ── HUD ──────────────────────────────────────────────────────────────
-        overlay_info(frame, conf_threshold, len(tracks), fps_display, class_counts)
+        overlay_info(frame, conf_threshold, len(tracks), fps_display, class_counts, args.model)
 
         cv2.imshow("YOLO + SORT Tracker  |  Q/ESC para sair", frame)
 
