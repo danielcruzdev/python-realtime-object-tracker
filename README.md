@@ -1,63 +1,63 @@
 # 🎯 python-realtime-object-tracker
 
-Detecção e rastreamento multi-objeto em tempo real via webcam, combinando **YOLOv8** (detecção) com o algoritmo **SORT** (rastreamento) e Filtro de Kalman.
+Real-time multi-object detection and tracking via webcam, combining **YOLOv8** (detection) with the **SORT** algorithm (tracking) and Kalman Filter.
 
 ---
 
-## 📸 Demonstração
+## 📸 Demo
 
-> Cada objeto recebe um **ID único e persistente**, bounding box colorida, label com classe, centróide e **trilha de trajetória** em tempo real.
+> Each object receives a **unique and persistent ID**, colored bounding box, class label, centroid, and **trajectory trail** in real time.
 
 ```
-[Webcam]  →  [YOLOv8: detecção]  →  [SORT + Kalman: rastreamento]  →  [Visualização OpenCV]
+[Webcam]  →  [YOLOv8: detection]  →  [SORT + Kalman: tracking]  →  [OpenCV visualization]
 ```
 
 ---
 
-## 🚀 Funcionalidades
+## 🚀 Features
 
-| Funcionalidade | Descrição |
+| Feature | Description |
 |---|---|
-| 🔍 Detecção YOLOv8 | Detecta 80 classes (pessoas, carros, animais, etc.) |
-| 🏷️ Rastreamento SORT | IDs únicos e persistentes por objeto via Filtro de Kalman |
-| 🌈 IDs coloridos | Cada track_id possui uma cor única e reprodutível |
-| 〰️ Trilha de trajetória | Linha que mostra o caminho percorrido por cada objeto |
-| 📊 HUD em tempo real | FPS, total de tracks ativos e contagem por classe |
-| ⚙️ Ajuste de confiança | Teclas `+` / `-` alteram o threshold YOLO em tempo real |
-| 👁️ Toggles de exibição | Liga/desliga centróides (`C`) e labels (`L`) |
-| 📷 Screenshot | Salva frame atual em PNG com a tecla `S` |
+| 🔍 YOLOv8 Detection | Detects 80 classes (people, cars, animals, etc.) |
+| 🏷️ SORT Tracking | Unique and persistent IDs per object via Kalman Filter |
+| 🌈 Colored IDs | Each track_id has a unique, reproducible color |
+| 〰️ Trajectory Trail | Line showing the path traveled by each object |
+| 📊 Real-time HUD | FPS, total active tracks, and per-class count |
+| ⚙️ Confidence Tuning | `+` / `-` keys change the YOLO threshold in real time |
+| 👁️ Display Toggles | Show/hide centroids (`C`) and labels (`L`) |
+| 📷 Screenshot | Save current frame as PNG with the `S` key |
 
 ---
 
-## 🛠️ Pré-requisitos
+## 🛠️ Prerequisites
 
 ### Python
 
-Versão recomendada: **Python 3.10 ou 3.11**
+Recommended version: **Python 3.10 or 3.11**
 
-> Python 3.12+ pode ter incompatibilidades com algumas dependências. Use 3.10 ou 3.11 para garantir compatibilidade.
+> Python 3.12+ may have compatibility issues with some dependencies. Use 3.10 or 3.11 to ensure compatibility.
 
-Baixe em: https://www.python.org/downloads/
+Download at: https://www.python.org/downloads/
 
-Durante a instalação no Windows, marque a opção **"Add Python to PATH"**.
+During installation on Windows, check the **"Add Python to PATH"** option.
 
-Verifique a instalação:
+Verify the installation:
 ```bash
 python --version
 ```
 
 ---
 
-## 📦 Instalação
+## 📦 Installation
 
-### 1. Clone o repositório
+### 1. Clone the repository
 
 ```bash
-git clone https://github.com/seu-usuario/python-realtime-object-tracker.git
+git clone https://github.com/your-username/python-realtime-object-tracker.git
 cd python-realtime-object-tracker
 ```
 
-### 2. (Recomendado) Crie um ambiente virtual
+### 2. (Recommended) Create a virtual environment
 
 ```bash
 # Windows
@@ -69,131 +69,131 @@ python -m venv venv
 source venv/bin/activate
 ```
 
-### 3. Instale as dependências
+### 3. Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-> Na primeira execução, o YOLOv8 fará o download automático do modelo `yolov8n.pt` (~6 MB) caso não exista na pasta.
+> On the first run, YOLOv8 will automatically download the `yolov8n.pt` model (~6 MB) if it does not exist in the folder.
 
 ---
 
-## ▶️ Executando o Projeto
+## ▶️ Running the Project
 
 ```bash
-# Padrão (yolov8n, câmera 0)
+# Default (yolov8n, camera 0)
 python main.py
 
-# Escolher modelo
+# Choose model
 python main.py --model yolov8s.pt
 python main.py --model yolov8m.pt
 
-# Escolher câmera e modelo
+# Choose camera and model
 python main.py --model yolov8s.pt --camera 1
 
-# Ajustar confiança inicial
+# Set initial confidence
 python main.py --model yolov8n.pt --conf 0.6
 
-# Ver todas as opções
+# Show all options
 python main.py --help
 ```
 
-Uma janela será aberta com o feed da webcam em tempo real com os objetos detectados e rastreados.
+A window will open with the real-time webcam feed showing detected and tracked objects.
 
 ---
 
-## ⌨️ Controles
+## ⌨️ Controls
 
-| Tecla | Ação |
+| Key | Action |
 |---|---|
-| `Q` ou `ESC` | Encerrar o programa |
-| `C` | Mostrar / esconder centróides |
-| `L` | Mostrar / esconder labels (classe + ID) |
-| `+` ou `=` | Aumentar confiança mínima (+5%) |
-| `-` | Diminuir confiança mínima (-5%) |
-| `S` | Salvar screenshot da janela atual |
+| `Q` or `ESC` | Quit the program |
+| `C` | Show / hide centroids |
+| `L` | Show / hide labels (class + ID) |
+| `+` or `=` | Increase minimum confidence (+5%) |
+| `-` | Decrease minimum confidence (-5%) |
+| `S` | Save a screenshot of the current frame |
 
 ---
 
-## ⚙️ Configurações
+## ⚙️ Configuration
 
-Edite as constantes no início do `main.py` para personalizar o comportamento:
+Edit the constants at the top of `main.py` to customize the behavior:
 
 ```python
-CAMERA_INDEX   = 0      # Índice da webcam (0 = padrão do sistema)
-YOLO_MODEL     = "yolov8n.pt"  # Modelo: n (rápido) → s → m → l → x (preciso)
-CONF_THRESHOLD = 0.4    # Confiança mínima inicial (0.0 a 1.0)
-IOU_THRESHOLD  = 0.45   # IoU para NMS interno do YOLO
-MAX_AGE        = 5      # Frames máximos sem atualização antes de remover um track
-MIN_HITS       = 3      # Detecções mínimas para confirmar um novo track
-SORT_IOU       = 0.3    # IoU mínimo para associar detecção a um track existente
-TRAIL_LENGTH   = 40     # Número de posições armazenadas na trilha de trajetória
+CAMERA_INDEX   = 0      # Webcam index (0 = system default)
+YOLO_MODEL     = "yolov8n.pt"  # Model: n (fast) → s → m → l → x (accurate)
+CONF_THRESHOLD = 0.4    # Initial minimum confidence (0.0 to 1.0)
+IOU_THRESHOLD  = 0.45   # IoU for YOLO internal NMS
+MAX_AGE        = 5      # Max frames without update before removing a track
+MIN_HITS       = 3      # Minimum detections to confirm a new track
+SORT_IOU       = 0.3    # Minimum IoU to associate a detection with an existing track
+TRAIL_LENGTH   = 40     # Number of positions stored in the trajectory trail
 ```
 
-### Escolha do modelo YOLO
+### YOLO model selection
 
-| Modelo | Velocidade | Precisão | Uso recomendado |
+| Model | Speed | Accuracy | Recommended for |
 |---|---|---|---|
 | `yolov8n.pt` | ⚡⚡⚡ | ★★☆ | Webcam / CPU |
-| `yolov8s.pt` | ⚡⚡ | ★★★ | CPU moderno / GPU |
+| `yolov8s.pt` | ⚡⚡ | ★★★ | Modern CPU / GPU |
 | `yolov8m.pt` | ⚡ | ★★★★ | GPU |
-| `yolov8l.pt` | 🐢 | ★★★★★ | GPU dedicada |
+| `yolov8l.pt` | 🐢 | ★★★★★ | Dedicated GPU |
 
 ---
 
-## 📂 Estrutura do Projeto
+## 📂 Project Structure
 
 ```
-yolo-sort-webcam/
+python-realtime-object-tracker/
 ├── tracker/
-│   ├── __init__.py   # Exporta a classe Sort
-│   └── sort.py       # Algoritmo SORT com Filtro de Kalman
-├── models/           # Pesos .pt (ignorados pelo git, baixados automaticamente)
+│   ├── __init__.py   # Exports the Sort class
+│   └── sort.py       # SORT algorithm with Kalman Filter
+├── models/           # .pt weights (git-ignored, downloaded automatically)
 │   └── yolov8n.pt
-├── screenshots/      # Screenshots salvos com a tecla S (ignorados pelo git)
-├── main.py           # Loop principal: captura, detecção, rastreamento e HUD
-├── requirements.txt  # Dependências do projeto
+├── screenshots/      # Screenshots saved with the S key (git-ignored)
+├── main.py           # Main loop: capture, detection, tracking, and HUD
+├── requirements.txt  # Project dependencies
 ├── .gitignore
 └── README.md
 ```
 
 ---
 
-## 🧠 Como Funciona
+## 🧠 How It Works
 
-### 1. Detecção — YOLOv8
-O frame da webcam é processado pelo **YOLOv8** que retorna bounding boxes `[x1, y1, x2, y2]` com a classe e a confiança de cada objeto detectado.
+### 1. Detection — YOLOv8
+Each webcam frame is processed by **YOLOv8**, which returns bounding boxes `[x1, y1, x2, y2]` with the class and confidence score for each detected object.
 
-### 2. Rastreamento — SORT + Filtro de Kalman
-O **SORT** (*Simple Online and Realtime Tracking*) recebe as detecções do YOLO e:
-- Usa o **Algoritmo Húngaro** para associar detecções anteriores com as novas (baseado em IoU)
-- Mantém um **Filtro de Kalman** por objeto para prever sua posição mesmo quando não detectado
-- Atribui **IDs únicos e estáveis** por objeto entre os frames
+### 2. Tracking — SORT + Kalman Filter
+**SORT** (*Simple Online and Realtime Tracking*) receives the YOLO detections and:
+- Uses the **Hungarian Algorithm** to associate previous detections with new ones (based on IoU)
+- Maintains a **Kalman Filter** per object to predict its position even when not detected
+- Assigns **unique and stable IDs** per object across frames
 
-### 3. Visualização — OpenCV
-Cada track renderizado inclui:
-- Bounding box colorida por ID
-- Label `ID X | classe`
-- Centróide (ponto central)
-- Trilha de trajetória (últimas N posições)
-- HUD com FPS, total de tracks ativos e contagem por classe
+### 3. Visualization — OpenCV
+Each rendered track includes:
+- Bounding box colored by ID
+- Label `ID X | class`
+- Centroid (center point)
+- Trajectory trail (last N positions)
+- HUD with FPS, total active tracks, and per-class count
 
 ---
 
-## 📚 Referências
+## 📚 References
 
 - [YOLOv8 — Ultralytics](https://github.com/ultralytics/ultralytics)
 - [SORT — Bewley et al., 2016](https://arxiv.org/abs/1602.00763)
-- [FilterPy — Filtro de Kalman em Python](https://github.com/rlabbe/filterpy)
+- [FilterPy — Kalman Filter in Python](https://github.com/rlabbe/filterpy)
 - [OpenCV](https://opencv.org/)
 
 ---
 
-## 📋 Requisitos de Sistema
+## 📋 System Requirements
 
 - **OS**: Windows 10/11, Ubuntu 20.04+, macOS 12+
-- **Python**: 3.10 ou 3.11
-- **RAM**: mínimo 4 GB (8 GB recomendado)
-- **Webcam**: qualquer câmera compatível com OpenCV
-- **GPU** *(opcional)*: CUDA compatível para aceleração do YOLO
+- **Python**: 3.10 or 3.11
+- **RAM**: minimum 4 GB (8 GB recommended)
+- **Webcam**: any OpenCV-compatible camera
+- **GPU** *(optional)*: CUDA-compatible for YOLO acceleration
